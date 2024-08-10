@@ -1,6 +1,7 @@
 ;; Set up the visible bell
 (setq visible-bell 1)
 
+
 (require 'package)
 ;; Old configuration
 ; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -52,6 +53,8 @@
 
 
 ;; Tabbing and window management
+(global-set-key (kbd "M-o") 'other-window)
+(windmove-default-keybindings)
 (global-set-key (kbd "M-[") 'tab-bar-history-back)
 (global-set-key (kbd "M-]") 'tab-bar-history-forward)
 (global-tab-line-mode t)
@@ -65,6 +68,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(gnu-elpa-keyring-update use_package)))
  '(package-selected-packages '(which-key doom-modeline rainbow-delimiters))
  '(tab-bar-history-mode t))
 (custom-set-faces
@@ -73,3 +77,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
