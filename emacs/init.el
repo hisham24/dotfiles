@@ -39,7 +39,7 @@
   :custom ((doom-modeline-height 15)))
 
 (use-package doom-themes
-  :init (load-theme 'doom-gruvbox))
+  :init (load-theme 'doom-city-lights))
 
 ;; Package will be released in Emacs30
 (use-package which-key
@@ -57,7 +57,8 @@
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 shell-mode-hook
-                eshell-mode-hook))
+                eshell-mode-hook
+		treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 
@@ -135,6 +136,16 @@
   ;:init
   ;(setq lsp-ui-sideline-show-code-actions t))
 
+(use-package lsp-treemacs
+  :after lsp)
+
+(use-package lsp-ivy)
+
+;; Commenting
+;; Note by default Alt+;, emac does commenting, not sure if uncomments
+(use-package evil-nerd-commenter
+  :bind("M-/" . evilnc-comment-or-uncomment-lines))
+
 ;; Typescript
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -173,9 +184,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("48042425e84cd92184837e01d0b4fe9f912d875c43021c3bcb7eeb51f1be5710" default))
+   '("7ec8fd456c0c117c99e3a3b16aaf09ed3fb91879f6601b1ea0eeaee9c6def5d9" "48042425e84cd92184837e01d0b4fe9f912d875c43021c3bcb7eeb51f1be5710" default))
  '(package-selected-packages
-   '(lsp-ui company-box company exec-path-from-shell typescript-mode lsp-mode gnu-elpa-keyring-update use_package which-key doom-modeline rainbow-delimiters))
+   '(evil-nerd-commenter lsp-ivy lsp-treemacs doom-themes lsp-ui company-box company exec-path-from-shell typescript-mode lsp-mode gnu-elpa-keyring-update use_package which-key doom-modeline rainbow-delimiters))
  '(tab-bar-history-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
