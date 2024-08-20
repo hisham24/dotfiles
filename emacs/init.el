@@ -48,6 +48,12 @@
   :init
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t)))
+;; TODO: all-the-icons not supported since 4.0.0, use nerd-fonts instead
+;; Do not know how to automatically setup but running M-x nerd-icons-install-fonts after the below line works
+(use-package nerd-icons)
+;; If seeing lag also add this
+;; ;; Don’t compact font caches during GC.
+;; (setq inhibit-compacting-font-caches t)
 
 ;; See if want to install this
 ;; (use-package all-the-icons-dired
@@ -240,7 +246,10 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  :custom
+  (evil-collection-magit-want-horizontal-movement t))
+  ;; (evil-collection-magit-use-y-for-yank t)) ;; Not sure what this does
 
 (use-package hydra)
 
@@ -253,6 +262,34 @@
 (rune/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
+
+;; Project Management
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/work")
+    (setq projectile-search-path '("~/work")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+;; Run counsel projectile rg for ripgrep
+;; Pop results out with C-c C-o - ivy-occur (ivy-minibuffer-map)
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+
+;; Source control
+(use-package magit
+  ;; :commands (magit-status magit-get-current-branch) ;; Do not need anymore
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)) ;; Remove default behaviour of showing diff in different buffer
+
+(use-package forge)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -261,7 +298,7 @@
  '(custom-safe-themes
    '("7ec8fd456c0c117c99e3a3b16aaf09ed3fb91879f6601b1ea0eeaee9c6def5d9" "48042425e84cd92184837e01d0b4fe9f912d875c43021c3bcb7eeb51f1be5710" default))
  '(package-selected-packages
-   '(evil-collection general all-the-icons evil-nerd-commenter lsp-ivy lsp-treemacs doom-themes lsp-ui company-box company exec-path-from-shell typescript-mode lsp-mode gnu-elpa-keyring-update use_package which-key doom-modeline rainbow-delimiters))
+   '(counsel-projectile evil-collection general all-the-icons evil-nerd-commenter lsp-ivy lsp-treemacs doom-themes lsp-ui company-box company exec-path-from-shell typescript-mode lsp-mode gnu-elpa-keyring-update use_package which-key doom-modeline rainbow-delimiters))
  '(tab-bar-history-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
